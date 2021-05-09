@@ -17,7 +17,33 @@
 
 package com.example.android.devbyteviewer.database
 
-// TODO (01) Create the DatabaseEntities class, adding annotations for the class and the primary key.
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.example.android.devbyteviewer.domain.Video
 
-// TODO (02) Define extension function List<DatabaseVideo>.asDomainModel(), that returns
+// TODO (01) Create the DatabaseEntities class, adding annotations for the class and the primary key. //DONE
+@Entity
+data class DatabaseVideo constructor(
+        @PrimaryKey val url: String,
+        val updated: String,
+        val title: String,
+        val description: String,
+        val thumbnail: String
+)
+
+// TODO (02) Define extension function List<DatabaseVideo>.asDomainModel(), that returns //DONE
 // a list of <Video>.
+/*
+*This extension function converts database objects to domain objects
+*/
+fun List<DatabaseVideo>.asDomainModel(): List<Video>{
+    return map {
+        Video(
+                url = it.url,
+                updated = it.updated,
+                title = it.title,
+                description = it.description,
+                thumbnail =  it.thumbnail
+        )
+    }
+}
