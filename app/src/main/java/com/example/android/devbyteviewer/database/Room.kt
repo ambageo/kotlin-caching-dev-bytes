@@ -17,8 +17,28 @@
 
 package com.example.android.devbyteviewer.database
 
-// TODO (01) Create a @Dao interface called VideoDao.
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 
-// TODO (02) Add SQL @Query getVideos() function that returns a List of DatabaseVideo.
+// TODO (01) Create a @Dao interface called VideoDao. //DONE
+@Dao
+interface VideoDao {
+    // TODO (02) Add SQL @Query getVideos() function that returns a List of DatabaseVideo. //DONE
+/*
+* It seems that if we don't specify a table name, we just use the entity name (DatabaseVideo)
+* in lower case letters
+* */
+    @Query("select * from databasevideo")
+    fun getVideos(): List<DatabaseVideo>
 
-// TODO (03) Add SQL @Insert insertAll() that replaces on conflict (or upsert).
+
+    // TODO (03) Add SQL @Insert insertAll() that replaces on conflict (or upsert). //DONE
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(vararg videos: DatabaseVideo)
+}
+
+
+
