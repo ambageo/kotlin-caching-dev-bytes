@@ -17,11 +17,12 @@
 
 package com.example.android.devbyteviewer.database
 
+import android.content.Context
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
+
+// TODO (04) Create an INSTANCE variable to store the VideosDatabase singleton. //DONE
+private lateinit var INSTANCE: VideosDatabase
 
 @Dao
 interface VideoDao {
@@ -32,15 +33,34 @@ interface VideoDao {
     fun insertAll(vararg videos: DatabaseVideo)
 }
 
-// TODO (01) Create an abstract VideosDatabase class that extends RoomDatabase.
+// TODO (01) Create an abstract VideosDatabase class that extends RoomDatabase. //DONE
+// TODO (02) Annotate VideosDatabase with @Database,including entities and version. //DONE
+@Database(entities= [DatabaseVideo::class], version =1, exportSchema = false)
+abstract class VideosDatabase: RoomDatabase() {
 
-// TODO (02) Annotate VideosDatabase with @Database,including entities and version.
+    // TODO (03) Inside VideosDatabase, create abstract val videoDao. //DONE
+    abstract val videoDao: VideoDao
 
-// TODO (03) Inside VideosDatabase, create abstract val videoDao.
+    // TODO (05) Define a function getDatabase() that returns the VideosDatabase INSTANCE.
+    fun getDatabase(context: Context): VideosDatabase{
 
-// TODO (04) Create an INSTANCE variable to store the VideosDatabase singleton.
+        // TODO (06) Inside getDatabase(), before returning INSTANCE, use a synchronized{} block to //DONE
+        // check whether INSTANCE is initialized, and, if it isn’t, use DatabaseBuilder to create it.
+        synchronized(VideosDatabase::class.java){
+            if(!::INSTANCE.isInitialized) {
+                INSTANCE = Room.databaseBuilder(
+                        context.applicationContext,
+                        VideosDatabase::class.java,
+                        "videos"
+                ).build()
+            }
+        }
+        return INSTANCE
+    }
+}
 
-// TODO (05) Define a function getDatabase() that returns the VideosDatabase INSTANCE.
 
-// TODO (06) Inside getDatabase(), before returning INSTANCE, use a synchronized{} block to
-// check whether INSTANCE is initialized, and, if it isn’t, use DatabaseBuilder to create it.
+
+
+
+
