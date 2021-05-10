@@ -34,7 +34,8 @@ import retrofit2.http.GET
  */
 interface DevbyteService {
     @GET("devbytes.json")
-    fun getPlaylist(): Deferred<NetworkVideoContainer>
+    //fun getPlaylist(): Deferred<NetworkVideoContainer>
+    suspend fun getPlaylist(): NetworkVideoContainer //Checking using suspend instead of Deferred
 }
 
 /**
