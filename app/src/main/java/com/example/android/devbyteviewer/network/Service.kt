@@ -34,6 +34,7 @@ import retrofit2.http.GET
 interface DevbyteService {
     @GET("devbytes.json")
     suspend fun getPlaylist(): NetworkVideoContainer
+
 }
 
 /**
@@ -43,7 +44,6 @@ interface DevbyteService {
 private val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
-
 /**
  * Main entry point for network access. Call like `Network.devbytes.getPlaylist()`
  */

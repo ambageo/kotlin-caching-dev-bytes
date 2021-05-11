@@ -20,6 +20,7 @@ package com.example.android.devbyteviewer.network
 import com.example.android.devbyteviewer.database.DatabaseVideo
 import com.example.android.devbyteviewer.domain.Video
 import com.squareup.moshi.JsonClass
+import timber.log.Timber
 
 /**
  * DataTransferObjects go in this file. These are responsible for parsing responses from the server
